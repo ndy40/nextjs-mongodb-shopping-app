@@ -1,19 +1,22 @@
-import { Schema, Types, models, model, Model } from 'mongoose';
-import { Item, ItemSchema } from './items';
+import { Schema, models, model, Model, Types } from "mongoose";
+import { Item, ItemSchema } from "./items";
 
-interface ShoppingList {
-    name: string;
-    items?: Types.DocumentArray<Item>;
+export interface ShoppingList {
+  _id?: Types.ObjectId | string;
+  title: string;
+  createdAt?: Date;
+  items?: Item[];
 }
 
 type ShoppingListType = Model<ShoppingList>;
 const shoppingListSchema = new Schema<ShoppingList, ShoppingListType>({
-    name: String,
-    items: [ItemSchema]
-})
+  title: String,
+  createdAt: { type: Date, default: Date.now },
+  items: [ItemSchema],
+});
 
-const ShoppingListDoc = models.ShoppingList || model<ShoppingList, ShoppingListType>('ShoppingList', shoppingListSchema)
+const ShoppingListDoc =
+  models.ShoppingList ||
+  model<ShoppingList, ShoppingListType>("ShoppingList", shoppingListSchema);
 
-export default ShoppingListDoc
-
-
+export default ShoppingListDoc;

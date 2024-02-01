@@ -1,10 +1,8 @@
 import dbConnect from "@/lib/db";
-import { getShoppingLists } from "@/lib/utils";
 import Image from "next/image";
 
 export default async function Home() {
   await dbConnect();
-  await getShoppingLists();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">

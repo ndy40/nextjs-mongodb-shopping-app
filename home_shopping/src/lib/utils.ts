@@ -1,13 +1,20 @@
-import ShoppingListDoc from "@/types/models/shopping/shopping_lists";
-import { cache } from "react";
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
-export const getShoppingLists = cache(async () => {
-    const resp = await ShoppingListDoc.create({
-        name: 'Shopping1'
-    })
+export function getLocale() {
+  "use client";
+  return "en";
+}
 
-    const result = await ShoppingListDoc.find({})
-    console.log('result', result)
+export function formatDateString(dateStr: string | Date) {
+  let currDate = dateStr as Date;
 
-})
+  if (typeof dateStr === "string") {
+    currDate = new Date(dateStr);
+  }
+  return currDate.toLocaleDateString(getLocale(), { timeZone: "UTC" });
+}

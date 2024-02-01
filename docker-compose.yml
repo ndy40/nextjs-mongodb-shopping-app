@@ -1,0 +1,25 @@
+services:
+  web:
+    build:
+      context: .
+    environment:
+      - MONGODB_URI=mongodb://root:example@db:27017/
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./home_shopping/:/opt/app
+  db:
+    image: mongo:6.0.13-jammy
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - db_volume:/data/db
+    depends_on:
+      - web
+
+volumes:
+  db_volume:
